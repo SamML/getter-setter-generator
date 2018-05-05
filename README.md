@@ -1,5 +1,6 @@
 # Getter and Setter Generator
 ### Extension for Visual Studio Code 
+Merits to https://github.com/afmicc/getter-setter-generator
 This extension generate get and set methods from the class variable declarations.
 
 ## Usage
