@@ -1,5 +1,7 @@
 const vscode = require('vscode');
+// const gentype = vscode.workspace.getConfiguration().get('conf.resource.getSetGenerationType');
 
+const gentype = 'upCaseFirst';
 function activate(context) {
 
     let disposable = vscode.commands.registerCommand('extension.generateGetterAndSetters', function () {
@@ -38,20 +40,9 @@ function activate(context) {
 function toPascalCase(str) {
     return str.replace(/\w+/g, w => w[0].toUpperCase() + w.slice(1).toLowerCase());
 }
-function toLowerCamelCase(str) {
-    let arr = [];
-    let word = str[0].toUpperCase();
-    for (i = 1; i < str.length; i++) {
-        if (str.charAt(i) == str.charAt(i).toLowerCase()) {
-            word += str.charAt(i);
-        }
-        else {
-            arr.push(word);
-            word = str.charAt(i);
-        }
-    }
-    arr.push(word);
-    return arr.join('');
+function upCaseFirst(str) {
+    return str.replace(/\w+/g, w => w[0].toUpperCase() + w.slice(1));
+    
 }
 
 function createGetterAndSetter(textPorperties) {
@@ -71,7 +62,15 @@ function createGetterAndSetter(textPorperties) {
         if (words.length > 2) {
             type = words[1];
             attribute = words[2];
-            Attribute = toLowerCamelCase(words[2]);
+            switch (gentype){
+                case 'upCaseFirst':
+                Attribute = upCaseFirst(words[2]);
+                break;
+                case 'pascalCase':
+                Attribute = toPascalCase(words[2]);
+                break;
+            }
+            
 
             create = true;
         }
@@ -79,7 +78,14 @@ function createGetterAndSetter(textPorperties) {
         else if (words.length == 2) {
             type = words[0];
             attribute = words[1];
-            Attribute = toLowerCamelCase(words[1]);
+            switch (gentype){
+                case 'upCaseFirst':
+                Attribute = upCaseFirst(words[2]);
+                break;
+                case 'pascalCase':
+                Attribute = toPascalCase(words[2]);
+                break;
+            }
 
             create = true;
         }
@@ -87,7 +93,14 @@ function createGetterAndSetter(textPorperties) {
         else if (words.length) {
             type = "Object";
             attribute = words[0];
-            Attribute = toLowerCamelCase(words[0]);
+            switch (gentype){
+                case 'upCaseFirst':
+                Attribute = upCaseFirst(words[2]);
+                break;
+                case 'pascalCase':
+                Attribute = toPascalCase(words[2]);
+                break;
+            }
 
             create = true;
         }
